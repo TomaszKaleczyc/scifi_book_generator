@@ -127,3 +127,7 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# custom
+*___*
+*internet_archive_scifi_v3.txt
