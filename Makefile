@@ -23,3 +23,10 @@ create-env:
 activate-env-command:
 	@echo "======================== Execute the below command in terminal ========================" 
 	@echo source $(VENV_ACTIVATE_PATH)
+
+download-dataset:
+	. $(VENV_ACTIVATE_PATH) && \
+	cd data && \
+	kaggle datasets download jannesklaas/scifi-stories-text-corpus && \
+	unzip scifi-stories-text-corpus.zip && \
+	rm scifi-stories-text-corpus.zip
