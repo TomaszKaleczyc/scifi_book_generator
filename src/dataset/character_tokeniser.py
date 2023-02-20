@@ -16,7 +16,7 @@ class CharacterTokeniser:
         self.character_to_token = {character: idx  for idx, character in enumerate(self.characters)}
         self.token_to_character = {idx: character for idx, character in enumerate(self.characters)}
         print('='*60)
-        print('Set up CharacterTokerniser')
+        print('Set up tokeniser')
         print('Vocabulary size:', self.vocabulary_size)
         print('Vocabulary:', self.vocabulary)
 

@@ -1,1 +1,3 @@
 from .character_tokeniser import CharacterTokeniser
+from .character_dataset import CharacterDataset
+from .character_data_module import CharacterDataModule
