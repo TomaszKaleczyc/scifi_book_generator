@@ -4,3 +4,4 @@ VALIDATION_SET_RATIO = 0.1
 BLOCK_SIZE = 8
 NUM_WORKERS = 8
 BATCH_SIZE = 8
+DEFAULT_TOKENISER = "character"  # ['tiktokeniser']

@@ -2,21 +2,21 @@ import torch
 from torch import Tensor
 from torch.utils.data import Dataset
 
-from .character_tokeniser import CharacterTokeniser
+from tokeniser import Tokeniser
 
 
 DEFAULT_DATA_TYPE = torch.long
 
 
-class CharacterDataset(Dataset):
+class LMDataset(Dataset):
     """
-    Manages creating a dataset
+    Manages creating a language model dataset
     """
     block_size: int
-    tokerniser: CharacterTokeniser
+    tokerniser: Tokeniser
     encoded_data: Tensor
 
-    def __init__(self, text: str, block_size: int, tokeniser: CharacterTokeniser, data_type: torch.dtype = DEFAULT_DATA_TYPE) -> None:
+    def __init__(self, text: str, block_size: int, tokeniser: Tokeniser, data_type: torch.dtype = DEFAULT_DATA_TYPE) -> None:
         self.block_size = block_size
         self.data_type = data_type
         self.tokerniser = tokeniser

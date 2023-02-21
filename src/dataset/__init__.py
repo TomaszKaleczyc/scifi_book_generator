@@ -1,3 +1,2 @@
-from .character_tokeniser import CharacterTokeniser
-from .character_dataset import CharacterDataset
-from .character_data_module import CharacterDataModule
+from .lm_dataset import LMDataset
+from .lm_data_module import LMDataModule
