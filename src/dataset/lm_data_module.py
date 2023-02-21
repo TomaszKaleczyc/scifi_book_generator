@@ -1,7 +1,7 @@
 from torch.utils.data import DataLoader
 from pytorch_lightning import LightningDataModule
 
-from tokeniser import CharacterTokeniser, Tokeniser
+import tokeniser as tknsr
 from .lm_dataset import LMDataset
 
 import config
@@ -15,8 +15,8 @@ class LMDataModule(LightningDataModule):
     raw_data_path: str
     batch_size: int
     validation_set_ratio: float
-    tokeniser_class: Tokeniser
-    tokeniser: Tokeniser
+    tokeniser_class: tknsr.Tokeniser
+    tokeniser: tknsr.Tokeniser
     train_dataset: LMDataset
     val_dataset: LMDataset
 
@@ -35,14 +35,17 @@ class LMDataModule(LightningDataModule):
         self.validation_set_ratio = validation_set_ratio
         self._set_datasets()
 
-    def _get_tokeniser_class(self, tokeniser: str) -> Tokeniser:
+    def _get_tokeniser_class(self, tokeniser: str) -> tknsr.Tokeniser:
         """
         Returns the selected tokeniser class
         """
-        if tokeniser == 'character':
-            return CharacterTokeniser
-        if tokeniser == 'tiktokeniser':
-            raise NotImplementedError
+        tokenisers = {
+            'character': tknsr.CharacterTokeniser,
+            'tiktokeniser': tknsr.TikTokeniser,
+        }
+        selected_tokeniser = tokenisers.get(tokeniser)
+        if selected_tokeniser:
+            return selected_tokeniser
         raise NotImplementedError
 
     def _set_datasets(self) -> None:
