@@ -30,3 +30,11 @@ download-dataset:
 	kaggle datasets download jannesklaas/scifi-stories-text-corpus && \
 	unzip scifi-stories-text-corpus.zip && \
 	rm scifi-stories-text-corpus.zip
+
+purge-output:
+	rm -r output/*
+
+run-training:
+	. $(VENV_ACTIVATE_PATH) && \
+	cd src/ && \
+	python train.py

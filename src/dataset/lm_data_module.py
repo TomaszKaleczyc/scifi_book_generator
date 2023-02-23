@@ -46,7 +46,7 @@ class LMDataModule(LightningDataModule):
         """
         tokenisers = {
             'character': tknsr.CharacterTokeniser,
-            'tiktokeniser': tknsr.TikTokeniser,
+            'tiktoken': tknsr.TikTokeniser,
         }
         selected_tokeniser = tokenisers.get(tokeniser)
         if selected_tokeniser:
