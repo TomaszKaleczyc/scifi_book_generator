@@ -2,10 +2,9 @@ from typing import Dict
 
 from .language_model import LanguageModel
 from .bigram_model import BigramLanguageModel
-from .transformer import Transformer
+from .basic_transformer import BasicTransformer
 
 
-MODELS: Dict[str, LanguageModel] = {
-    'bigram': BigramLanguageModel,
-    'transformer': Transformer,
+TRANSFORMERS: Dict[str, LanguageModel] = {
+    'basic_transformer': BasicTransformer,
 }
