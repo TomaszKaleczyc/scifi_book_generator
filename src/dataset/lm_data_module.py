@@ -1,3 +1,4 @@
+from torch import Tensor
 from torch.utils.data import DataLoader
 from pytorch_lightning import LightningDataModule
 
@@ -20,12 +21,16 @@ class LMDataModule(LightningDataModule):
     train_dataset: LMDataset
     val_dataset: LMDataset
 
+    @property
+    def vocabulary_size(self) -> int:
+        return self.tokeniser.vocabulary_size
+
     def __init__(
             self, 
-            block_size: int = config.BLOCK_SIZE,
+            block_size: int = config.DEFAULT_BLOCK_SIZE,
             raw_data_path: str = config.RAW_DATA_PATH,
-            validation_set_ratio: float = config.VALIDATION_SET_RATIO,
-            batch_size: int = config.BATCH_SIZE,
+            validation_set_ratio: float = config.DEFAULT_VALIDATION_SET_RATIO,
+            batch_size: int = config.DEFAULT_BATCH_SIZE,
             tokeniser: str = config.DEFAULT_TOKENISER
             ) -> None:
         self.block_size = block_size
@@ -68,7 +73,7 @@ class LMDataModule(LightningDataModule):
             self.train_dataset, 
             batch_size=self.batch_size, 
             shuffle=True, 
-            num_workers=config.NUM_WORKERS
+            num_workers=config.DEFAULT_NUM_WORKERS
             )
 
     def val_dataloader(self) -> DataLoader:
@@ -76,8 +81,11 @@ class LMDataModule(LightningDataModule):
             self.val_dataset, 
             batch_size=self.batch_size, 
             shuffle=False, 
-            num_workers=config.NUM_WORKERS
+            num_workers=config.DEFAULT_NUM_WORKERS
             )
 
     def test_dataloader(self) -> DataLoader:
         raise NotImplementedError
+
+    def decode(self, tokens: Tensor) -> str:
+        return self.train_dataset.decode(tokens)
