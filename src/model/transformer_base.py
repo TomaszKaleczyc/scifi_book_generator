@@ -2,19 +2,17 @@ from abc import ABC, abstractmethod
 from typing import Callable, Tuple
 
 import torch
-import torch.nn as nn
 from torch import Tensor
 from torch.nn import functional as F
 
 from pytorch_lightning import LightningModule
 
 from .language_model import LanguageModel
-from .self_attention_head import SelfAttentionHead
 
 
 class Transformer(ABC, LanguageModel, LightningModule):
     """
-    Transformer base implementation
+    Transformer abstract base implementation
     """
     n_embeddings: int
     block_size: int

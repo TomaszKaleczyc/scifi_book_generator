@@ -1,18 +1,11 @@
-from typing import Callable, Tuple
-
 import torch
 import torch.nn as nn
 from torch import Tensor
-from torch.nn import functional as F
 
-from pytorch_lightning import LightningModule
-
-from .language_model import LanguageModel
+from .transformer import Transformer
 from .self_attention_head import SelfAttentionHead
 
 import config
-
-from .transformer import Transformer
 
 
 class BasicTransformer(Transformer):
