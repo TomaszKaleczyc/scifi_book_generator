@@ -1,12 +1,12 @@
 from typing import Dict
 
+from .transformer_base import TransformerBase
 from .language_model import LanguageModel
 from .bigram_model import BigramLanguageModel
-from .transformer_base import TransformerBase
-from .basic_transformer import BasicTransformer
+from .single_head_transformer import SingleHeadTransformer
 
 
 
 TRANSFORMERS: Dict[str, TransformerBase] = {
-    'basic_transformer': BasicTransformer,
+    'single_head_transformer': SingleHeadTransformer,
 }

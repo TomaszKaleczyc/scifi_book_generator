@@ -8,7 +8,7 @@ from .self_attention_head import SelfAttentionHead
 import config
 
 
-class BasicTransformer(TransformerBase):
+class SingleHeadTransformer(TransformerBase):
     """
     Simplistic transformer implementation
     """
@@ -21,14 +21,13 @@ class BasicTransformer(TransformerBase):
             n_embeddings: int = config.DEFAULT_N_EMBEDDINGS,
             n_heads: int = config.DEFAULT_N_HEADS
             ) -> None:
-        super(BasicTransformer, self).__init__(
+        super(SingleHeadTransformer, self).__init__(
             vocabulary_size=vocabulary_size,
             learning_rate=learning_rate,
             n_embeddings=n_embeddings,
             block_size=block_size,
-            n_heads=n_heads            
+            n_heads=1            
         )
-        # model structure:
         self.token_embedding_table = nn.Embedding(
             self.vocabulary_size, self.n_embeddings
             )
