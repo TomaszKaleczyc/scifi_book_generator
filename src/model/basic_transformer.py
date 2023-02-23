@@ -2,13 +2,13 @@ import torch
 import torch.nn as nn
 from torch import Tensor
 
-from .transformer import Transformer
+from .transformer_base import TransformerBase
 from .self_attention_head import SelfAttentionHead
 
 import config
 
 
-class BasicTransformer(Transformer):
+class BasicTransformer(TransformerBase):
     """
     Simplistic transformer implementation
     """

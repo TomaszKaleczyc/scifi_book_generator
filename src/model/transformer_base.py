@@ -10,9 +10,9 @@ from pytorch_lightning import LightningModule
 from .language_model import LanguageModel
 
 
-class Transformer(ABC, LanguageModel, LightningModule):
+class TransformerBase(LanguageModel, LightningModule):
     """
-    Transformer abstract base implementation
+    Transformer base implementation
     """
     n_embeddings: int
     block_size: int
@@ -26,7 +26,7 @@ class Transformer(ABC, LanguageModel, LightningModule):
             n_embeddings: int,
             n_heads: int
             ) -> None:
-        super(Transformer, self).__init__()
+        super(TransformerBase, self).__init__()
         self.vocabulary_size = vocabulary_size
         self.learning_rate = learning_rate
         self.n_embeddings = n_embeddings
@@ -36,11 +36,7 @@ class Transformer(ABC, LanguageModel, LightningModule):
     @property
     def head_size(self) -> int:
         return self.n_embeddings // self.n_heads
-        
-    @abstractmethod
-    def forward(self, tokens: Tensor) -> Tensor:
-        """"""
-    
+           
     def _loss_step(
             self, 
             batch: Tuple[Tensor, Tensor], 
