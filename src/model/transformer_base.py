@@ -26,7 +26,7 @@ class TransformerBase(LanguageModel, LightningModule):
             n_embeddings: int,
             n_heads: int
             ) -> None:
-        super(TransformerBase, self).__init__()
+        super().__init__()
         self.vocabulary_size = vocabulary_size
         self.learning_rate = learning_rate
         self.n_embeddings = n_embeddings

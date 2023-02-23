@@ -1,18 +1,16 @@
-from pytorch_lightning.callbacks import ModelCheckpoint
-from pytorch_lightning import Trainer
 
 from dataset import LMDataModule
-from model import Transformer as Model
+from model import TRANSFORMERS
 
-import config
 
-MODEL_NAME = 'bigram'
+MODEL_NAME = 'multi_head_transformer'
 TOKENISER = 'character' #'tiktoken'
 BLOCK_SIZE = 8
 BATCH_SIZE = 8
-N_EMBEDDING = 32
+N_EMBEDDINGS = 32
 VALIDATION_SET_RATIO = 0.1
 LEARNING_RATE = 1e-3
+N_HEADS = 4
 
 NUM_EPOCHS=1
 SAVE_DIR = '../output'
@@ -24,11 +22,12 @@ data_module = LMDataModule(
     tokeniser=TOKENISER
 )
 
-model = Model(
+model = TRANSFORMERS[MODEL_NAME](
     vocabulary_size=data_module.vocabulary_size,
     learning_rate=LEARNING_RATE,
     block_size=data_module.block_size,
-    n_embedding=N_EMBEDDING
+    n_embeddings=N_EMBEDDINGS,
+    n_heads=N_HEADS,
     )
 
 tokens, targets = next(iter(data_module.train_dataloader()))

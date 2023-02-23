@@ -9,24 +9,24 @@ class SelfAttentionHead(nn.Module):
     Module representing a single self 
     attention head operations
     """
-    n_embedding: int
+    n_embeddings: int
     head_size: int
     block_size: int
 
     def __init__(
             self,
-            n_embedding: int,
+            n_embeddings: int,
             head_size: int,
             block_size: int
         ) -> None:
         super(SelfAttentionHead, self).__init__()
-        self.n_embedding = n_embedding
+        self.n_embeddings = n_embeddings
         self.head_size = head_size
         self.block_size = block_size
 
-        self.key_table = nn.Linear(self.n_embedding, self.head_size, bias=False)
-        self.query_table = nn.Linear(self.n_embedding, self.head_size, bias=False)
-        self.value_table = nn.Linear(self.n_embedding, self.head_size, bias=False)
+        self.key_table = nn.Linear(self.n_embeddings, self.head_size, bias=False)
+        self.query_table = nn.Linear(self.n_embeddings, self.head_size, bias=False)
+        self.value_table = nn.Linear(self.n_embeddings, self.head_size, bias=False)
         self._set_tril()
 
     def _set_tril(self) -> None:
