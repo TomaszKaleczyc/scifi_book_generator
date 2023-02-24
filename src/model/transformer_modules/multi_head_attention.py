@@ -34,7 +34,9 @@ class MultiHeadAttention(nn.Module):
                 block_size=self.block_size
             ) for _ in range(self.n_heads)
         ])
+        self.projection = nn.Linear(self.n_embeddings, self.n_embeddings)
 
     def forward(self, x: Tensor) -> Tensor:
-        output = torch.cat([head(x) for head in self.heads], dim=-1)
+        attention_heads_output = torch.cat([head(x) for head in self.heads], dim=-1)
+        output = self.projection(attention_heads_output)
         return output

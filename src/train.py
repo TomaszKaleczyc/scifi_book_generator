@@ -7,7 +7,7 @@ from dataset import LMDataModule
 from model import TRANSFORMERS
 
 
-MODEL_NAME = 'multi_head_transformer'
+MODEL_NAME = 'final_multi_head_transformer'
 TOKENISER = 'character'
 BLOCK_SIZE = 8
 BATCH_SIZE = 8
@@ -61,7 +61,8 @@ trainer = Trainer(
     callbacks=callbacks
 )
 
-
+print('='*60)
+print('MODEL TRAINING:')
 trainer.fit(
     model,
     train_dataloaders=data_module.train_dataloader(),
@@ -72,7 +73,7 @@ trainer.fit(
 inference_input = torch.zeros((1, 1), dtype=torch.long).to(model.device)
 max_new_tokens = 1000
 inference_results = model.generate(inference_input, max_new_tokens)
-print()
-print('Inference test:')
+print('='*60)
+print('INFERENCE TEST:')
 for inference_result in inference_results:
     print(data_module.decode(inference_result))

@@ -1,6 +1,5 @@
 import torch.nn as nn
 from torch import Tensor
-from torch.nn import functional as F
 
 
 class FeedForward(nn.Module):
@@ -15,6 +14,7 @@ class FeedForward(nn.Module):
         self.feed_forward = nn.Sequential(
             nn.Linear(self.n_embeddings, self.n_embeddings),
             nn.ReLU(),
+            nn.Linear(self.n_embeddings, self.n_embeddings),
         )
 
     def forward(self, x: Tensor) -> Tensor:
