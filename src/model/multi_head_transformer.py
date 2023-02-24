@@ -3,7 +3,7 @@ import torch.nn as nn
 from torch import Tensor
 
 from .transformer_base import TransformerBase
-from .multi_head_attention import MultiHeadAttention
+from .transformer_modules import FeedForward, MultiHeadAttention
 
 import config
 
@@ -40,6 +40,7 @@ class MultiHeadTransformer(TransformerBase):
             head_size=self.head_size,
             block_size=self.block_size
         )
+        self.feed_forward = FeedForward(self.n_embeddings)
         self.lm_head = nn.Linear(self.n_embeddings, self.vocabulary_size)
 
     def forward(self, tokens: Tensor) -> Tensor:
@@ -47,6 +48,7 @@ class MultiHeadTransformer(TransformerBase):
         token_embeddings = self.token_embedding_table(tokens)
         position_embeddings = self.position_embedding_table(torch.arange(T, device=self.device))
         input_embeddings = token_embeddings + position_embeddings
-        output_embeddings = self.self_attention_heads(input_embeddings)
+        attention_embeddings = self.self_attention_heads(input_embeddings)
+        output_embeddings = self.feed_forward(attention_embeddings)
         logits = self.lm_head(output_embeddings)
         return logits

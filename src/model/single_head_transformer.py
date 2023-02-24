@@ -3,7 +3,7 @@ import torch.nn as nn
 from torch import Tensor
 
 from .transformer_base import TransformerBase
-from .self_attention_head import SelfAttentionHead
+from .transformer_modules import SelfAttentionHead
 
 import config
 
