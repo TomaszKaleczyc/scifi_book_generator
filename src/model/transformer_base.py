@@ -58,6 +58,7 @@ class TransformerBase(LanguageModel, LightningModule):
         return loss
     
     def generate(self, tokens: Tensor, max_new_tokens: int) -> Tensor:
+        self.eval()
         for _ in range(max_new_tokens):
             context_tokens = tokens[:, -self.block_size:]
             logits = self(context_tokens)
