@@ -43,6 +43,7 @@ class FinalMultiHeadTransformer(TransformerBase):
             DecoderStack(**stack_args),
             DecoderStack(**stack_args),
             DecoderStack(**stack_args),
+            nn.LayerNorm(self.n_embeddings)
         )
         self.lm_head = nn.Linear(self.n_embeddings, self.vocabulary_size)
 

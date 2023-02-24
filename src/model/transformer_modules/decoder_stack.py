@@ -31,12 +31,14 @@ class DecoderStack(nn.Module):
             block_size=self.block_size
         )
         self.feed_forward = FeedForward(self.n_embeddings)
+        self.layer_norm1 = nn.LayerNorm(self.n_embeddings)
+        self.layer_norm2 = nn.LayerNorm(self.n_embeddings)
 
     @property
     def head_size(self) -> int:
         return self.n_embeddings // self.n_heads
     
     def forward(self, x: Tensor) -> Tensor:
-        x = x + self.self_attention_heads(x)
-        x = x + self.feed_forward(x)
+        x = x + self.self_attention_heads(self.layer_norm1(x))
+        x = x + self.feed_forward(self.layer_norm2(x))
         return x
