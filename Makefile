@@ -38,3 +38,8 @@ run-training:
 	. $(VENV_ACTIVATE_PATH) && \
 	cd src/ && \
 	python train.py
+
+run-test:
+	. $(VENV_ACTIVATE_PATH) && \
+	cd src/ && \
+	python test.py
