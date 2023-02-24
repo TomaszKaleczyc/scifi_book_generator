@@ -4,25 +4,30 @@ from pytorch_lightning.callbacks import ModelCheckpoint
 from pytorch_lightning import Trainer
 
 from dataset import LMDataModule
-from model import TRANSFORMERS
+from model import BigramLanguageModel, TRANSFORMERS
 
 import config
 
 
 torch.manual_seed(config.RANDOM_SEED)
 
-
+# MODEL_NAME = 'bigram'
+# MODEL_NAME = 'single_head_transformer'
+# MODEL_NAME = 'multi_head_transformer'
 MODEL_NAME = 'final_multi_head_transformer'
+
 TOKENISER = 'character'
-BLOCK_SIZE = 8
-BATCH_SIZE = 8
+BLOCK_SIZE = 256
+BATCH_SIZE = 32
 VALIDATION_SET_RATIO = 0.1
-LEARNING_RATE = 1e-3
-N_HEADS = 4
-N_EMBEDDINGS = 32
+# LEARNING_RATE = 1e-3
+LEARNING_RATE = 5e-4
+N_STACKS = 6
+N_HEADS = 6
+N_EMBEDDINGS = 384
 DROPOUT_PROBABILITY = 0.2
 
-LIMIT_TRAIN_BATCHES_RATIO = 3e-4
+LIMIT_TRAIN_BATCHES_RATIO = 3e-4 * (BATCH_SIZE // 8)
 LIMIT_VAL_BATCHES_RATIO = LIMIT_TRAIN_BATCHES_RATIO
 
 NUM_EPOCHS = 1
@@ -37,14 +42,21 @@ data_module = LMDataModule(
 )
 
 
-model = TRANSFORMERS[MODEL_NAME](
-    vocabulary_size=data_module.vocabulary_size,
-    learning_rate=LEARNING_RATE,
-    block_size=BLOCK_SIZE,
-    n_embeddings=N_EMBEDDINGS,
-    n_heads=N_HEADS,
-    dropout_probability=DROPOUT_PROBABILITY
-)
+if MODEL_NAME == 'bigram':
+    model = BigramLanguageModel(
+        vocabulary_size=data_module.vocabulary_size,
+        learning_rate=LEARNING_RATE
+    )
+else:
+    model = TRANSFORMERS[MODEL_NAME](
+        vocabulary_size=data_module.vocabulary_size,
+        learning_rate=LEARNING_RATE,
+        block_size=BLOCK_SIZE,
+        n_embeddings=N_EMBEDDINGS,
+        n_heads=N_HEADS,
+        n_stacks=N_STACKS,
+        dropout_probability=DROPOUT_PROBABILITY
+    )
 
 
 callbacks = [

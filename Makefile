@@ -6,12 +6,6 @@ REQUIREMENTS_PATH=$(ENV_FOLDER)/requirements.txt
 PYTHON_VERSION = python3.8
 
 
-help:
-	@echo "======================== Project makefile  ========================"
-	@echo "Use make {command} with any of the below options:"
-	@echo "    * create_env - creating the project virtual environment"
-	@echo "    * activate-env-command - printing the command to activate environment in the console"
-
 create-env:
 	@echo "======================== Creating the project virtual environment ========================" 
 	$(PYTHON_VERSION) -m virtualenv --system-site-packages -p $(PYTHON_VERSION) $(VENV_PATH)
@@ -31,15 +25,15 @@ download-dataset:
 	unzip scifi-stories-text-corpus.zip && \
 	rm scifi-stories-text-corpus.zip
 
-purge-output:
-	rm -r output/*
-
 run-training:
 	. $(VENV_ACTIVATE_PATH) && \
 	cd src/ && \
 	python train.py
 
-run-test:
+purge-output:
+	rm -r output/*
+
+run-tensorboard:
+	@echo "======================== Run the displayed link in your browser to view training results via tensorboard ========================" 
 	. $(VENV_ACTIVATE_PATH) && \
-	cd src/ && \
-	python test.py
+	tensorboard --logdir ./output/
