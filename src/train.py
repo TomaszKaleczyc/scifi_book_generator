@@ -6,6 +6,11 @@ from pytorch_lightning import Trainer
 from dataset import LMDataModule
 from model import TRANSFORMERS
 
+import config
+
+
+torch.manual_seed(config.RANDOM_SEED)
+
 
 MODEL_NAME = 'final_multi_head_transformer'
 TOKENISER = 'character'
@@ -15,6 +20,8 @@ VALIDATION_SET_RATIO = 0.1
 LEARNING_RATE = 1e-3
 N_HEADS = 4
 N_EMBEDDINGS = 32
+DROPOUT_PROBABILITY = 0.2
+
 LIMIT_TRAIN_BATCHES_RATIO = 3e-4
 LIMIT_VAL_BATCHES_RATIO = LIMIT_TRAIN_BATCHES_RATIO
 
@@ -35,7 +42,8 @@ model = TRANSFORMERS[MODEL_NAME](
     learning_rate=LEARNING_RATE,
     block_size=BLOCK_SIZE,
     n_embeddings=N_EMBEDDINGS,
-    n_heads=N_HEADS
+    n_heads=N_HEADS,
+    dropout_probability=DROPOUT_PROBABILITY
 )
 
 

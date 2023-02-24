@@ -19,14 +19,17 @@ class SingleHeadTransformer(TransformerBase):
             learning_rate: float = config.DEFAULT_LEARNING_RATE,
             block_size: int = config.DEFAULT_BLOCK_SIZE,
             n_embeddings: int = config.DEFAULT_N_EMBEDDINGS,
-            n_heads: int = config.DEFAULT_N_HEADS
-            ) -> None:
-        super(SingleHeadTransformer, self).__init__(
+            n_heads: int = 1,
+            n_stacks: int = 1,
+            dropout_probability: float = config.DEFAULT_DROPOUT_PROBABILITY
+        ) -> None:
+        super().__init__(
             vocabulary_size=vocabulary_size,
             learning_rate=learning_rate,
             n_embeddings=n_embeddings,
             block_size=block_size,
-            n_heads=1            
+            n_heads=1,
+            dropout_probability=dropout_probability            
         )
         self.token_embedding_table = nn.Embedding(
             self.vocabulary_size, self.n_embeddings
@@ -37,7 +40,8 @@ class SingleHeadTransformer(TransformerBase):
         self.self_attention_head = SelfAttentionHead(
             n_embeddings=self.n_embeddings,
             head_size=self.head_size,
-            block_size=self.block_size
+            block_size=self.block_size,
+            dropout_probability=self.dropout_probability
         )
         self.lm_head = nn.Linear(self.head_size, self.vocabulary_size)
 

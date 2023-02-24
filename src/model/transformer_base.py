@@ -17,6 +17,7 @@ class TransformerBase(LanguageModel, LightningModule):
     n_embeddings: int
     block_size: int
     n_heads: int
+    dropout_probability: float
 
     def __init__(
             self, 
@@ -24,7 +25,8 @@ class TransformerBase(LanguageModel, LightningModule):
             learning_rate: float,
             block_size: int,
             n_embeddings: int,
-            n_heads: int
+            n_heads: int,
+            dropout_probability: float
             ) -> None:
         super().__init__()
         self.vocabulary_size = vocabulary_size
@@ -32,6 +34,7 @@ class TransformerBase(LanguageModel, LightningModule):
         self.n_embeddings = n_embeddings
         self.block_size = block_size
         self.n_heads = n_heads
+        self.dropout_probability = dropout_probability
 
     @property
     def head_size(self) -> int:
