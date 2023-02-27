@@ -31,7 +31,7 @@ run-training:
 	python train.py
 
 purge-output:
-	rm -r output/*
+	rm -r output/lightning_logs/version_*
 
 run-tensorboard:
 	@echo "======================== Run the displayed link in your browser to view training results via tensorboard ========================" 
